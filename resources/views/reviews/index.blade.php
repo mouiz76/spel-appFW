@@ -3,13 +3,30 @@
 @section('title', 'Reviews')
 
 @section('content')
-    <h2>Reviews</h2>
+<div class="bg-white p-6 rounded border border-gray-200">
+    <h1 class="text-xl font-bold mb-4">Reviews</h1>
 
-    <ul>
-        @forelse ($reviews as $review)
-            <li>{{ $review->comment }}</li>
-        @empty
-            <li>Geen reviews gevonden.</li>
-        @endforelse
-    </ul>
+    @if (count($reviews) === 0)
+        <p class="text-gray-500">Geen reviews gevonden.</p>
+    @else
+        <table class="w-full border-collapse border border-gray-200 text-left text-sm">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="border border-gray-200 p-2 w-20">ID</th>
+                    <th class="border border-gray-200 p-2">Review / Comment</th>
+                    <th class="border border-gray-200 p-2">Product</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($reviews as $review)
+                    <tr class="hover:bg-gray-50">
+                        <td class="border border-gray-200 p-2">{{ $review->id }}</td>
+                        <td class="border border-gray-200 p-2">"{{ $review->comment }}"</td>
+                        <td class="border border-gray-200 p-2">{{ $review->product->name ?? $review->product_id }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+</div>
 @endsection
